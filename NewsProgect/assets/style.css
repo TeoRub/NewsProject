@@ -1,0 +1,659 @@
+/* ============================================================
+   style1.css — Foglio unico per tutto il progetto
+   Copre: home, articoli, login, register, cambia_pw
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Variabili globali ──────────────────────────────────────── */
+:root {
+  --bg:        #f5f2ec;
+  --surface:   #fffef9;
+  --accent:    #c0392b;
+  --accent2:   #1a1a2e;
+  --line:      #d9d4c7;
+  --text:      #1c1c1c;
+  --muted:     #7a7368;
+  --font-head: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius:    12px;
+  --shadow:    0 4px 24px rgba(0,0,0,.08);
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 70% -10%, rgba(192,57,43,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 10% 100%, rgba(26,26,46,.05) 0%, transparent 60%);
+}
+
+/* ── Layout pagina ──────────────────────────────────────────── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 28px 16px 48px;
+}
+
+/* ── App card (home + pagine articoli) ──────────────────────── */
+.app-card {
+  width: 100%;
+  max-width: 1000px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 28px;
+  border-bottom: 2px solid var(--accent);
+  background: var(--accent2);
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+/* ── Logo mark ──────────────────────────────────────────────── */
+.mark {
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  border-radius: 8px;
+  flex-shrink: 0;
+  position: relative;
+  text-decoration: none;
+}
+.mark::after {
+  content: 'P';
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: 20px;
+  color: #fff;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-header-text { flex: 1; min-width: 120px; }
+.app-header-text h1 {
+  font-family: var(--font-head);
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 900;
+  letter-spacing: -.5px;
+  color: #fff;
+}
+.subtitle {
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+  margin-top: 2px;
+}
+
+/* ── User badge ─────────────────────────────────────────────── */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 14px;
+  background: rgba(255,255,255,.08);
+  cursor: pointer;
+  position: relative;
+  transition: background .2s;
+}
+.user-badge:hover { background: rgba(255,255,255,.14); }
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  font-family: var(--font-head);
+  flex-shrink: 0;
+}
+
+.user-name { font-size: 13px; font-weight: 600; color: #fff; }
+.user-sub  { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 1px; }
+
+/* ── Logout dropdown ─────────────────────────────────────────── */
+#logout-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  z-index: 200;
+  box-shadow: 0 8px 32px rgba(0,0,0,.14);
+  color: var(--text);
+}
+#logout-menu .btn { margin: 4px 4px 0 0; }
+
+/* ── App body ───────────────────────────────────────────────── */
+.app-body { padding: 28px; }
+
+/* ── Grid ───────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ── Cards ─────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.card-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  background: #f9f6f0;
+}
+.card-head h3 {
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.card-body { padding: 16px 18px; }
+
+/* ── Quick list ─────────────────────────────────────────────── */
+.quick-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.quick-list li { display: block; }
+
+/* ── Linkrow ─────────────────────────────────────────────────── */
+.linkrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: background .15s, border-color .15s, opacity .15s;
+}
+.linkrow:hover { background: #f2ede3; border-color: var(--line); opacity: .9; }
+.linkrow span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.actions.center { justify-content: center; }
+
+.btn,
+button[type="submit"],
+input[type="button"],
+input[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  transition: all .15s;
+}
+.btn:hover,
+button[type="submit"]:hover,
+input[type="button"]:hover { background: #ede9df; }
+
+.btn.primary,
+.btn.solid,
+button[type="submit"]:not(.modify) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn.primary:hover,
+.btn.solid:hover,
+button[type="submit"]:hover { background: #a93226; border-color: #a93226; }
+
+/* ── Pills ───────────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .15s;
+}
+.pill.red  { background: var(--accent);  border-color: var(--accent);  color: #fff; }
+.pill.red:hover { background: #a93226; }
+.pill.accent { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+
+/* ── Notice / article card ───────────────────────────────────── */
+.notice {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  background: var(--surface);
+  transition: box-shadow .15s, transform .15s;
+}
+.notice:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); transform: translateY(-1px); }
+.notice h3 { font-family: var(--font-head); font-size: 16px; margin-bottom: 6px; }
+.notice p  { font-size: 14px; line-height: 1.6; color: var(--muted); margin-bottom: 4px; }
+.notice strong { color: var(--text); }
+
+/* ── Date group ─────────────────────────────────────────────── */
+.date-group { margin-bottom: 24px; }
+.date-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+/* ── Empty state ─────────────────────────────────────────────── */
+.empty-state { text-align: center; padding: 64px 20px; color: var(--muted); }
+.empty-icon  { font-size: 44px; margin-bottom: 14px; }
+.empty-state h3 {
+  font-family: var(--font-head);
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+/* ── Form (articolo + select home) ─────────────────────────── */
+form { display: flex; flex-direction: column; gap: 14px; }
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  background: #faf8f3;
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+  appearance: none;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(192,57,43,.12);
+}
+
+textarea { resize: vertical; line-height: 1.7; min-height: 200px; }
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* ── Container (form articolo) ──────────────────────────────── */
+.container { max-width: 660px; margin: 0 auto; }
+.container h2 {
+  font-family: var(--font-head);
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 900;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--accent);
+  color: var(--text);
+}
+
+/* ── Article reading (notizia.php) ──────────────────────────── */
+article h2 { font-family: var(--font-head); font-style: italic; }
+article p  { font-size: 16px; line-height: 1.85; color: #333; }
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.app-footer {
+  padding: 14px 28px;
+  border-top: 1px solid var(--line);
+  background: #f9f6f0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SEZIONE LOGIN / REGISTER / CAMBIA_PW
+   (body scuro, card centrata)
+   ════════════════════════════════════════════════════════════ */
+
+body.auth {
+  background: #12111a;
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -20%, rgba(192,57,43,.18) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%2312111a'/%3E%3Crect width='1' height='1' x='0' y='0' fill='%23ffffff04'/%3E%3Crect width='1' height='1' x='2' y='2' fill='%23ffffff03'/%3E%3C/svg%3E");
+}
+
+body.auth .page {
+  align-items: center;
+  padding: 32px 16px;
+}
+
+/* ── Login card ─────────────────────────────────────────────── */
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  overflow: hidden;
+  animation: slideUp .4s ease both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.login-header {
+  background: var(--accent2);
+  padding: 26px 28px 20px;
+  border-bottom: 3px solid var(--accent);
+}
+
+.header-row { display: flex; align-items: center; gap: 14px; }
+
+.header-text h1 {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+}
+.header-text p { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 3px; }
+
+.login-body { padding: 28px 28px 8px; }
+
+/* ── Divider ─────────────────────────────────────────────────── */
+.divider-or {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.divider-or::before, .divider-or::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+
+/* ── Error ───────────────────────────────────────────────────── */
+.login-error {
+  background: #fff0ef;
+  border: 1px solid #f5c6c3;
+  border-left: 4px solid var(--accent);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+/* ── Form grid (register 2 colonne) ─────────────────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.req { color: var(--accent); margin-left: 2px; }
+
+/* ── Login actions ───────────────────────────────────────────── */
+.login-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+/* ── Google button ───────────────────────────────────────────── */
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background .15s, box-shadow .15s;
+}
+.btn-google:hover { background: #faf8f3; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+
+/* ── Login pills ─────────────────────────────────────────────── */
+.login-pills { display: flex; gap: 8px; margin-top: 16px; margin-bottom: 4px; }
+
+/* ── Login footer ────────────────────────────────────────────── */
+.login-footer {
+  padding: 16px 28px;
+  border-top: 1px solid var(--line);
+  background: #f9f6f0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .app-body    { padding: 18px; }
+  .app-header  { padding: 14px 18px; }
+  .form-grid   { grid-template-columns: 1fr; }
+  .login-body  { padding: 20px 18px 8px; }
+  .login-header { padding: 20px 18px 16px; }
+  .login-footer { padding: 14px 18px; }
+}
+
+/* ── Bottoni modifica/elimina/visualizza ────────────────────── */
+.modify-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.modify {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  transition: all .15s;
+  white-space: nowrap;
+}
+.modify:hover { background: #ede9df; }
+
+/* Colori diversi per ogni azione */
+form:has( input[value="visualizza"]) .modify{
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+form:has( input[value="visualizza"]) .modify:hover{
+  background: var(--accent2);
+  color: #fff;
+}
+
+form:has(input[value="delete"]) .modify,
+.modify.elimina {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.modify.elimina:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.modify.modifica {
+  border-color: #2980b9;
+  color: #2980b9;
+}
+.modify.modifica:hover {
+  background: #2980b9;
+  color: #fff;
+}
+
+/* ── Popup overlay ──────────────────────────────────────────── */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.popup-overlay.aperto {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.popup {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(0,0,0,.2);
+  padding: 32px 28px 24px;
+  width: 100%;
+  max-width: 480px;
+  transform: translateY(16px);
+  transition: transform .25s;
+}
+.popup-overlay.aperto .popup {
+  transform: translateY(0);
+}
+
+.popup h3 {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.popup .field { margin-bottom: 14px; }
+
+.popup .field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 5px;
+}
+
+.popup .field input[type="text"],
+.popup .field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  background: #faf8f3;
+  color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+}
+.popup .field input:focus,
+.popup .field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(192,57,43,.12);
+}
+.popup .field textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
