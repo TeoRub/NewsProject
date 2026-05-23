@@ -243,7 +243,7 @@ $dati = $em->fetchAll();
                 <form method="post">
                   <select name="gestori" id="listaUtenti">
                     <?php foreach ($utenti_trovati as $u): ?>
-                      <option  value="<?= $u['Email'] ?>"><?= htmlspecialchars($u['Nome']) ?> <?= htmlspecialchars($u['Cognome']) ?></option>
+                      <option  value="<?= $u['Email'] ?>"><?= htmlspecialchars($u['Nome']) ?> <?= htmlspecialchars($u['Cognome']) ?> - <?= htmlspecialchars($u['Email']) ?></option>
                     <?php endforeach; ?>
                   </select>
                   <input type="hidden" name="action" value="aggiungi" >
@@ -260,7 +260,7 @@ $dati = $em->fetchAll();
                 <form method="post">
                   <select name="gestori" id="listaUtenti">
                     <?php foreach ($utenti_trovatiG as $u): ?>
-                      <option  value="<?= $u['Email'] ?>"><?= htmlspecialchars($u['Nome']) ?> <?= htmlspecialchars($u['Cognome']) ?></option>
+                      <option  value="<?= $u['Email'] ?>"><?= htmlspecialchars($u['Nome']) ?> <?= htmlspecialchars($u['Cognome']) ?> - <?= htmlspecialchars($u['Email']) ?></option>
                     <?php endforeach; ?>
                   </select>
                   <input type="hidden" name="action" value="aggiungiA" >
