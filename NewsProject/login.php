@@ -7,33 +7,58 @@ if (isset($_SESSION['stato']) && $_SESSION['stato'] === 1) {
   header("Location: home.php");
   exit;
 }
+$_POST["accettato"]=0;
 $_POST["state"]=true;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  if($_POST["action"]==="accetta"){
+    header("Location: home.php");
+    exit;
+  }
   $password = $_POST["hash"];
   $email =$_POST["email"];
   // Genera un hash sicuro
   if (filter_var($email, FILTER_VALIDATE_EMAIL)){
-    $pw  = $pdo->prepare("SELECT hashpw 
+    $st  = $pdo->prepare("SELECT stato 
                         FROM Utenti 
-                        WHERE stato = 1
-                        AND Email = :email");
+                        WHERE Email = :email");
   } else {
-    $pw  = $pdo->prepare("SELECT hashpw 
+    $st  = $pdo->prepare("SELECT stato 
                         FROM Utenti 
-                        WHERE stato = 1
-                        AND User_name = :email");
+                        WHERE User_name = :email");
   }
-  $pw->execute([":email" => $email]);
-  $utente=$pw->fetch();
+  $st->execute([":email" => $email]);
+  $stato=$st->fetch();
+  if($stato["stato"]===1){
+    $_POST["accettato"]=1;
+  }else{
+    $_POST["accettato"]=2;
+  }
+  if($_POST["accettato"]===1){
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)){
+      $pw  = $pdo->prepare("SELECT hashpw 
+                          FROM Utenti 
+                          WHERE stato = 1
+                          AND Email = :email");
+    } else {
+      $pw  = $pdo->prepare("SELECT hashpw 
+                          FROM Utenti 
+                          WHERE stato = 1
+                          AND User_name = :email");
+    }
+    $pw->execute([":email" => $email]);
+    $utente=$pw->fetch();
+  }
   // Per verificare la password in fase di login
-  if ($utente && password_verify($password, $utente["hashpw"])) {
-    if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){$_SESSION['user_email'] = $_POST["email"];}
-    else{$_SESSION['UserName'] = $_POST["email"];}
-    header("Location: auth_callback.php");
-    exit;
-  }
-  else{
-    $_POST["state"]=false;
+  if($_POST["accettato"]===1){
+    if ($utente && password_verify($password, $utente["hashpw"])) {
+      if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){$_SESSION['user_email'] = $_POST["email"];}
+      else{$_SESSION['UserName'] = $_POST["email"];}
+      header("Location: auth_callback.php");
+      exit;
+    }
+    else{
+      $_POST["state"]=false;
+    }
   }
 }
 ?>
@@ -76,6 +101,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               Credenziali errate. Riprova.
             </div>
         <?php endif; ?>
+        <?php if($_POST["accettato"]===2): ?>
+            <div class="login-error">
+              <h3>la tua registrazione è stata notificata all' amministratore</h3>
+              <p>Potrai accedere solo dopo che l'amministratore ti avrà accettato</p>
+            </div>
+        <?php endif; ?>
             <form id="aut" method="POST">
               <input type="hidden" name="action"            value="login">
               <div class="field">
@@ -108,6 +139,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </footer>
     </section>
   </main>
+
+
+  <div class="popup-overlay" id="popup">
+  <div class="popup">
+    <h3>la tua registrazione verrà notificata all' amministratore</h3>
+    <label>Potrai accedere solo dopo che l'amministratore ti avrà accettato</label>
+        <form method="POST" action="">
+        <input type="hidden" name="action" value= "accetta" >
+        <div class="popup-actions">
+            <button type="submit" class="btn primary">OK</button>
+      </div>
+    </form>
+  </div>
+</div>
   <script>
      document.getElementById("btn").addEventListener('click', () => {
       // Qui fai i tuoi controlli personalizzati
@@ -127,5 +172,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       return hashHex;
     }
   </script>
+  
+  <?php if(isset($_GET["registered"]) && $_GET["registered"]==="1"): ?>
+    <script>document.getElementById('popup').classList.add('aperto');</script>
+  <?php endif; ?>
 </body>
 </html>
